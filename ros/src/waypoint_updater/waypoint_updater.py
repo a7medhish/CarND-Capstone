@@ -112,18 +112,7 @@ class WaypointUpdater(object):
         return temp    
     
         
-        
-    def pose_cb(self, msg):
-        # TODO: Implement
-        self.pose = msg 
-
-    def waypoints_cb(self, waypoints):
-        self.base_waypoints = waypoints
-        if not self.waypoints_2d:
-            self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
-            self.waypoint_tree = KDTree(self.waypoints_2d)
-
-
+ 
     def pose_cb(self, msg):
         rospy.loginfo('pose_cb')
         rospy.loginfo('msg: {}'.format(msg))

@@ -71,8 +71,19 @@ class DBWNode(object):
         rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
         rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)
         rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb) #to avoid manual mode confusion 
+        
+        self.current_vel = None
+        self.curr_ang_vel = None
+        self.dbw_enabled = None
+        self.linear_vel = None
+        self.angular_vel = None
+        self.throttle = self.steering = self.brake = 0
+        
+        self.loop()
 
         
+        
+    
 
     def dbw_enabled_cb(self, msg):
         self.dbw_enabled = msg
@@ -83,7 +94,6 @@ class DBWNode(object):
 
     def velocity_cb(self, msg):
         self.current_vel = msg.twist.linear.x        
-        self.loop()
 
     def loop(self):
         rate = rospy.Rate(50) # 50Hz

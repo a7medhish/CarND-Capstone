@@ -11,7 +11,7 @@ import math
 
 
 
-LOOKAHEAD_WPS = 200 # Number of waypoints we will publish. You can change this number
+LOOKAHEAD_WPS = 80 # Number of waypoints we will publish. You can change this number
 MAX_DECEL = .5
 
 
@@ -40,9 +40,9 @@ class WaypointUpdater(object):
     def loop(self):
         rate = rospy.Rate(30)
         while not rospy.is_shutdown():
-            if self.pose and self.base_waypoints:
+            if self.pose and self.waypoint_tree:
                 closest_waypoint_id  = self.get_closest_waypoint_idx()
-                self.publish_waypoints(closest_waypoint_id)
+                self.publish_waypoints()
             rate.sleep()
             
     def get_closest_waypoint_idx(self):
